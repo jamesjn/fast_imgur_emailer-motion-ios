@@ -8,15 +8,6 @@ class ImageListController < UITableViewController
     navigationItem.title = 'Locations' 
     navigationItem.leftBarButtonItem = editButtonItem
     navigationItem.rightBarButtonItem = UIBarButtonItem.alloc.initWithBarButtonSystemItem(UIBarButtonSystemItemAdd, target:self, action:'addImageItem')
-
-    #navigationController.view.backgroundColor = UIColor.colorWithPatternImage(load_picture_from_url)
-    #tableView.backgroundColor = UIColor.clearColor
-  end
-
-  def addImageItem
-    url = "http://i.imgur.com/bbg8Y.jpg"
-    @items << url
-    view.reloadData
   end
 
   def tableView(tableView, numberOfRowsInSection:section)
@@ -28,7 +19,7 @@ class ImageListController < UITableViewController
     cell = tableView.dequeueReusableCellWithIdentifier(CellID) || UITableViewCell.alloc.initWithStyle(UITableViewCellStyleSubtitle, reuseIdentifier:CellID)
     imageItem = @items[indexPath.row]
     cell.textLabel.text = imageItem
-    cell.image = load_picture_from_url
+    cell.image = load_picture_from imageItem
     cell
   end
 
@@ -38,8 +29,17 @@ class ImageListController < UITableViewController
     view.reloadData
   end
 
-  def load_picture_from_url
-    url = NSURL.URLWithString("http://i.imgur.com/bbg8Y.jpg")
+  def load_picture_from url
+    url = NSURL.URLWithString(url)
     image = UIImage.imageWithData(NSData.dataWithContentsOfURL(url))
   end
+
+  private
+
+  def addImageItem
+    url = "http://i.imgur.com/bbg8Y.jpg"
+    @items << url
+    view.reloadData
+  end
+
 end
