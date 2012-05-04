@@ -10,8 +10,18 @@ class ImgurUploaderController < UIViewController
     button_load = UIButton.buttonWithType(UIButtonTypeRoundedRect)
     button_load.setTitle('Camera', forState:UIControlStateNormal)
     button_load.addTarget(self, action:'useCamera', forControlEvents:UIControlEventTouchUpInside)
-    button_load.frame = [[100, 250],[100,50]]
+    button_load.frame = [[50, 250],[100,50]]
     view.addSubview(button_load)
+
+    upload_imgur_button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+    upload_imgur_button.setTitle('Imgur', forState:UIControlStateNormal)
+    upload_imgur_button.addTarget(self, action:'uploadImgur', forControlEvents:UIControlEventTouchUpInside)
+    upload_imgur_button.frame = [[150, 250],[100,50]]
+    view.addSubview(upload_imgur_button)
+  end
+
+  def uploadImgur
+    ImgurUploader.uploadImage(@viewImageView.image)
   end
 
   def useCamera
