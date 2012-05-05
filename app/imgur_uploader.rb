@@ -2,7 +2,7 @@ class ImgurUploader
   attr_accessor :delegate
 
   def uploadImage(image)
-    imageData = UIImagePNGRepresentation(image);
+    imageData = UIImageJPEGRepresentation(image);
     #image64Bstr = [imageData].pack('m')
     #NSLog("%s", image64Bstr)
     #uploadCall = "key=b1507316815a853a7a23318ff905a486&image="+image64Bstr
