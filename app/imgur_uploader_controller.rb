@@ -1,4 +1,5 @@
 class ImgurUploaderController < UIViewController
+  attr_accessor :viewImageView
 
   def viewDidLoad
     @items = []
@@ -23,7 +24,7 @@ class ImgurUploaderController < UIViewController
   def uploadImgur
     imgur_uploader = ImgurUploader.alloc.init
     imgur_uploader.delegate = self
-    imgur_uploader.uploadImage(@image)
+    imgur_uploader.uploadImage(@viewImageView.image)
   end
 
   def useCamera

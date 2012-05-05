@@ -1,19 +1,20 @@
 class ImgurUploader
   attr_accessor :delegate
+  attr_accessor :image
 
-  def uploadImage(image)
-    imageData = UIImageJPEGRepresentation(image);
-    #image64Bstr = [imageData].pack('m')
-    #NSLog("%s", image64Bstr)
-    #uploadCall = "key=b1507316815a853a7a23318ff905a486&image="+image64Bstr
-    #request = NSMutableURLRequest.requestWithURL(NSURL.URLWithString("http://api.imgur.com/2/upload"))
-    #request.setHTTPMethod("POST")
-    #request.setValue(NSString.stringWithFormat("%d", uploadCall.length), forHTTPHeaderField:("Content-length"))
-    #request.setHTTPBody(uploadCall.dataUsingEncoding(NSUTF8StringEncoding))
-    #theConnection = NSURLConnection.alloc.initWithRequest(request, delegate:self)
-    #if(theConnection)
-    #  @receivedData = NSMutableData.data
-    #end
+  def uploadImage image
+    imageData = UIImageJPEGRepresentation(image,0.3)
+    image64Bstr = [imageData].pack('m')
+    NSLog("%@", image64Bstr)
+    uploadCall = "key=b1507316815a853a7a23318ff905a486&image="+image64Bstr
+    request = NSMutableURLRequest.requestWithURL(NSURL.URLWithString("http://api.imgur.com/2/upload"))
+    request.setHTTPMethod("POST")
+    request.setValue(NSString.stringWithFormat("%d", uploadCall.length), forHTTPHeaderField:("Content-length"))
+    request.setHTTPBody(uploadCall.dataUsingEncoding(NSUTF8StringEncoding))
+    theConnection = NSURLConnection.alloc.initWithRequest(request, delegate:self)
+    if(theConnection)
+      @receivedData = NSMutableData.data
+    end
   end
 
   def connection(connection, didReceiveData:data)
@@ -30,8 +31,8 @@ class ImgurUploader
 
   def parserDidEndDocument(parser)
     NSLog("Did finish parsing")
-    NSLog("%s", imageURL)
-    delegate.imageUploadedWithURLString(@imageURL)
+    NSLog("%s", @imageURL)
+    #delegate.imageUploadedWithURLString(@imageURL)
   end
 
   def parser(parser, didStartElement:elementName, namespaceURI:namespaceURI, qualifiedName:qName, attributes:attributeDict)
