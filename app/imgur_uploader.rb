@@ -2,11 +2,20 @@ class ImgurUploader
   attr_accessor :delegate
   attr_accessor :image
 
+  def cgi_escape(str)
+    str.gsub(/([^ a-zA-Z0-9_.-]+)/) do
+      '%' + $1.unpack('H2' * $1.bytesize).join('%').upcase
+    end.tr(' ', '+')
+  end
+
   def uploadImage image
-    imageData = UIImageJPEGRepresentation(image,0.3)
-    image64Bstr = [imageData].pack('m')
-    NSLog("%@", image64Bstr)
-    uploadCall = "key=b1507316815a853a7a23318ff905a486&image="+image64Bstr
+    imageData = UIImageJPEGRepresentation(image, 0.3) 
+    imageStr = imageData.base64Encoding
+    #image64Bstr = [imageStr].pack('m')
+    imageStr = cgi_escape(imageStr)
+    NSLog("%@", imageStr)
+    #uploadCall = NSString.stringWithFormat("key=b1507316815a853a7a23318ff905a486&image=%@", imageStr)
+    uploadCall = "key=b1507316815a853a7a23318ff905a486&image="+imageStr
     request = NSMutableURLRequest.requestWithURL(NSURL.URLWithString("http://api.imgur.com/2/upload"))
     request.setHTTPMethod("POST")
     request.setValue(NSString.stringWithFormat("%d", uploadCall.length), forHTTPHeaderField:("Content-length"))
