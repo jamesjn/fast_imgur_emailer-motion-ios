@@ -21,7 +21,9 @@ class ImgurUploaderController < UIViewController
   end
 
   def uploadImgur
-    ImgurUploader.uploadImage(@viewImageView.image)
+    imgur_uploader = ImgurUploader.alloc.init
+    imgur_uploader.delegate = self
+    imgur_uploader.uploadImage(@image)
   end
 
   def useCamera
@@ -61,7 +63,7 @@ class ImgurUploaderController < UIViewController
 
   def load_picture_from url
     url = NSURL.URLWithString(url)
-    image = UIImage.imageWithData(NSData.dataWithContentsOfURL(url))
+    @image = UIImage.imageWithData(NSData.dataWithContentsOfURL(url))
   end
 
   def addImageItem
