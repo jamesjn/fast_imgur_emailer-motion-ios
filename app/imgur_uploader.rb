@@ -41,7 +41,7 @@ class ImgurUploader
   def parserDidEndDocument(parser)
     NSLog("Did finish parsing")
     NSLog("%s", @imageURL)
-    #delegate.imageUploadedWithURLString(@imageURL)
+    delegate.imageUploadedWithURLString(@imageURL)
   end
 
   def parser(parser, didStartElement:elementName, namespaceURI:namespaceURI, qualifiedName:qName, attributes:attributeDict)
